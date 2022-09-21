@@ -28,7 +28,7 @@ public class BaseTest {
         }
     }
 
-    public void closeBrowser() throws InterruptedException {
+    public void closeBrowser() {
         driver.quit();
     }
 }

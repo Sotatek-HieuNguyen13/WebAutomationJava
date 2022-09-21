@@ -41,11 +41,11 @@ public class Product {
         this.productLink = productLink;
     }
 
-    public void inforProduct() {
+    public void productInfor() {
         System.out.println("Web name: " + getWebName());
         System.out.println("Name: " + getProuductName());
-        System.out.println("Price: " + Math.round(getProductPrice()) + "$");
+        System.out.println("Price: " + Math.ceil(getProductPrice() * 100) / 100 + "$");
         System.out.println("Link: " + getProductLink());
-        System.out.println("-------------");
+        System.out.println("*************");
     }
 }

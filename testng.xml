@@ -5,8 +5,6 @@
         <classes>
             <class name="automation.MainTest">
             </class>
-<!--            <class name="automation.AmazonTest">-->
-<!--            </class>-->
         </classes>
     </test>
 </suite>

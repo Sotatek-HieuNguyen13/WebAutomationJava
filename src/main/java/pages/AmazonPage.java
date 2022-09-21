@@ -2,26 +2,16 @@ package pages;
 
 import model.Product;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
-import utils.CommonService;
-
-import javax.xml.bind.Element;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AmazonPage {
-    private WebDriver driver;
-    private CommonService commonService;
+public class AmazonPage extends BasePage {
 
     public AmazonPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
-        commonService = new CommonService(driver);
+        super(driver);
     }
 
     @FindBy(id = "twotabsearchtextbox")
@@ -30,40 +20,22 @@ public class AmazonPage {
     @FindBy(xpath = "//span[contains(text(),'results for')]")
     WebElement resultSearch;
 
-    @FindBy(id = "s-result-sort-select")
-    WebElement labelSort;
-
-    By product_name = By.xpath("//span[@data-component-id='11']//div[2]//div[@data-component-type='s-search-result']//div[@class='a-section a-spacing-small a-spacing-top-small']");
-
     public void enterSearchValue(String value) {
-        commonService.setTextValue(inputSearch, value);
-        inputSearch.sendKeys(Keys.ENTER);
-    }
-
-    public void Result() {
-        String act_ResultDisplay = resultSearch.getText();
-        System.out.println(act_ResultDisplay);
-//        Assert.assertEquals(act_ResultDisplay, "1-16 of 457 results for");
+        setTextValue(inputSearch, value);
+        sendKeysEnter(inputSearch);
     }
 
     public void isDisplayResult() {
-        //return resultSearch.isDisplayed();
         Assert.assertTrue(resultSearch.isDisplayed());
     }
 
-    public void sortByPrice(String text) {
-        commonService.selectOptionByVisibleText(labelSort, text);
-        commonService.waitForPageLoad();
-    }
-
     public List<Product> getAllProducts() {
-        Actions action = new Actions(driver);
-        List<WebElement> elementList = driver.findElements(By.xpath("//div[@data-component-type='s-search-result']//div[@class='a-section']//div[@class='a-section a-spacing-small a-spacing-top-small']"));
-        commonService.waitForPageLoad();
+        List<WebElement> elementList = getDriver().findElements(By.xpath("//div[@data-component-type='s-search-result']//div[@class='a-section']//div[@class='a-section a-spacing-small a-spacing-top-small']"));
+        waitForPageLoad();
         List<Product> listProduct = new ArrayList<>();
 
         for (WebElement e : elementList) {
-            action.moveToElement(e).build().perform();
+            scrollToElement(e);
             Product product = new Product();
             product.setWebName("Amazon.com");
             product.setProuductName(e.findElement(By.cssSelector("[class='a-size-medium a-color-base a-text-normal']")).getText());
@@ -73,7 +45,7 @@ public class AmazonPage {
                 } else {
                     product.setProductPrice(0.0);
                 }
-            }catch (NotFoundException ex){
+            } catch (NotFoundException ex) {
                 product.setProductPrice(0.0);
             }
 
@@ -83,6 +55,4 @@ public class AmazonPage {
 
         return listProduct;
     }
-
-
 }
