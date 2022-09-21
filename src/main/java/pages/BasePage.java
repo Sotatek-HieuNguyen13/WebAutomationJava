@@ -1,6 +1,5 @@
 package pages;
 
-import okio.Timeout;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -13,17 +12,13 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-/**
- * @author hieunt
- * @since 24/08/2022
- */
 public class BasePage {
     private WebDriver driver;
     private WebDriverWait wait;
     Actions action;
 
     private final int timeoutWait = 10;
-    long timeOutInSeconds = 5;
+    private final int timeOutInSeconds = 5;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -65,8 +60,4 @@ public class BasePage {
         action.moveToElement(element).build().perform();
     }
 
-    public void selectedOptionByVisibleText(WebElement element, String text) {
-        Select select = new Select(element);
-        select.selectByVisibleText(text);
-    }
 }

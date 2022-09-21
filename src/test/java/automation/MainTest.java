@@ -48,7 +48,7 @@ public class MainTest extends BaseTest {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void tearDown() throws InterruptedException {
+    public void tearDown() {
         closeBrowser();
     }
 
